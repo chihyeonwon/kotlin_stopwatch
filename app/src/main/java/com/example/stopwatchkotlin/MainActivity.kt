@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import java.util.Timer
+import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -16,6 +18,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var tv_minute: TextView
 
     var isRunning = false
+    var timer : Timer? = null
+    var time = 0
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +54,51 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     // 스탑워치 시작
-    private fun start() {}
-    private fun pause() {}
-    private fun refresh() {}
+    private fun start() {
+        btn_start.text = "일시정지"
+        btn_start.setBackgroundColor(getColor(R.color.red))
+        isRunning = true
+
+        // 백그라운드 스레드에서만 실행
+        timer = timer(period = 10) {
+            time++
+
+            val millis = time * 10
+            val total_seconds = millis / 1000
+            val minute = total_seconds / 60
+            val second = total_seconds % 60
+            val milli_second = millis % 100
+
+            runOnUiThread {
+                if (isRunning) {
+                    tv_millisecond.text =
+                        if (milli_second < 10) "0${milli_second}" else ".${milli_second}"
+                    tv_second.text = if (second < 10) ":0${second}" else ":${second}"
+                    tv_minute.text = "${minute}"
+                }
+            }
+
+        }
+
+    }
+    private fun pause() {
+        btn_start.text = "시작"
+        btn_start.setBackgroundColor(getColor(R.color.blue))
+
+        isRunning = false
+        timer?.cancel()
+    }
+    private fun refresh() {
+        timer?.cancel()
+
+        btn_start.text = "시작"
+        btn_start.setBackgroundColor(getColor(R.color.blue))
+        isRunning = false
+
+        time = 0
+        tv_millisecond.text = ".00"
+        tv_second.text = ":00"
+        tv_minute.text = "00"
+    }
 
 }

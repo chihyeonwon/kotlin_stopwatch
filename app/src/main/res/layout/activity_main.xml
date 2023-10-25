@@ -12,15 +12,15 @@
         android:layout_height="wrap_content"
         android:text="00"
         android:textSize="45sp"
-        app:layout_constraintBottom_toBottomOf="@+id/second"
-        app:layout_constraintEnd_toStartOf="@+id/second"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_second"
+        app:layout_constraintEnd_toStartOf="@+id/tv_second"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/second"
+        android:id="@+id/tv_second"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=":00"
@@ -38,10 +38,10 @@
         android:layout_height="wrap_content"
         android:text=".00"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/second"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_second"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/second"
+        app:layout_constraintStart_toEndOf="@+id/tv_second"
         tools:ignore="MissingConstraints" />
 
     <Button
